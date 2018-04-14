@@ -6,13 +6,14 @@
   "files": ["www"],
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development gulp dev"
+    "dev": "NODE_ENV=development gulp dev"<% if (webhook) { %>,
+    "webhook": "node ./webhook.js"<% } %>
   },
   "devDependencies": {
     "autoprefixer": "^8.2.0",
     "cssnano": "^3.10.0",
     "config": "^1.30.0",
-    "git-webhook-ci": "^0.9.1",
+    <% if (webhook) { %>"git-webhook-ci": "^0.9.1",<% } %>
     "gulp-amphtml-validator": "^1.0.2",
     "gulp-clean": "^0.4.0",
     "gulp-postcss": "^7.0.1",

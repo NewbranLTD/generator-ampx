@@ -41,7 +41,23 @@ module.exports = class extends Generator {
         type: 'confirm',
         name: 'upgrade',
         message: 'Run upgrade check at the end?',
-        default: true
+        default: false
+      },
+      {
+        type: 'confirm',
+        name: 'webhook',
+        message: 'Would you like to use a webhook?',
+        default: false
+      },
+      {
+        type: 'list',
+        name: 'gitProvider',
+        message: 'Select your git provider',
+        choices: ['github', 'gitlab', 'gitee'],
+        default: 'github',
+        when: answers => {
+          return answers.webhook;
+        }
       }
     ];
     return this.prompt(prompts).then(props => {
@@ -59,12 +75,18 @@ module.exports = class extends Generator {
     this.fs.copy(this.templatePath('gulpfile.js'), this.destinationPath('gulpfile.js'));
     // @TODO copy some of our files to the destination folder
     // Const base = join(__dirname, '..', '..');
-    // Construct the package.json
     this.fs.copyTpl(
-      this.templatePath('package.json'),
+      this.templatePath('package.json.tpl'),
       this.destinationPath('package.json'),
       this.props
     );
+    if (this.props.webhook) {
+      this.fs.copyTpl(
+        this.templatePath('webhook.js'),
+        this.destinationPath('webhook.js'),
+        this.props
+      );
+    }
   }
 
   install() {
