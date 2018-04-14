@@ -1,0 +1,22 @@
+{
+  "generator-nodex": {
+    "promptValues": {
+      "authorName": "Joel Chu",
+      "authorEmail": "joelckchu@gmail.com",
+      "authorUrl": "joelchu.com"
+    },
+    "name": "generator-ampx",
+    "description": "AMP (Accelerate Mobile Page) generator",
+    "homepage": "https://newbran.ch",
+    "authorName": "Joel Chu",
+    "authorEmail": "joelckchu@gmail.com",
+    "authorUrl": "joelchu.com",
+    "keywords": ["Node", "JS", "Javascript", "AMP", "Google"],
+    "includeCoveralls": false,
+    "githubAccount": "joelchu",
+    "yarnInstalled": true,
+    "cnpmInstalled": false,
+    "installer": "yarn",
+    "lang": "en"
+  }
+}
