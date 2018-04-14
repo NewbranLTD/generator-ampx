@@ -39,12 +39,14 @@ exports.ampValidator = (page) => {
 };
 
 // Grab data then put content into the .amp.html using _.template method
-exports.compileAmp = pages => {
+exports.compileAmp = (pages, build) => {
+  const paths = config.get('paths');
+  const dir = build ? paths.dest : paths.dev;
   return done => {
     getData( props => {
       gulp.src(pages)
         .pipe(template(props))
-        .pipe(gulp.dest(configs.paths.dest));
+        .pipe(gulp.dest(dir));
       done();
     });
   };
