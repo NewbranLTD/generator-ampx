@@ -10,16 +10,18 @@ const { join } = require('path');
 const paths = config.get('paths');
 
 exports.sassTask = build => {
-  const dest = build ? paths.dest : paths.dev;
-  return gulp.src( join(paths.style, 'main.scss') )
-    .pipe(sourcemaps.init())
-    .pipe( sass({
-      includePaths: join(process.cwd(), 'node_modules')
-    }).on('error', sass.logError) )
-    .pipe(postcss([
-      autoprefixer,
-      cssnano
-    ]))
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(dest));
-}
+  return () => {
+    const dest = build ? paths.dest : paths.dev;
+    return gulp.src( join(paths.app, paths.style, 'main.scss') )
+      .pipe(sourcemaps.init())
+      .pipe( sass({
+        includePaths: join(process.cwd(), 'node_modules')
+      }).on('error', sass.logError) )
+      .pipe(postcss([
+        autoprefixer,
+        cssnano
+      ]))
+      .pipe(sourcemaps.write('./'))
+      .pipe(gulp.dest(join(dest, paths.style)));
+  };
+};

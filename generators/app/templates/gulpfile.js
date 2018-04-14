@@ -28,7 +28,7 @@ gulp.task('dev:build:amp', gulp.series(
   ampValidator(join(PATHS.dev, 'index.html'))
 ));
 
-gulp.task('dev:build:sass', sassTask);
+gulp.task('dev:build:sass', sassTask());
 
 gulp.task('dev:build', gulp.series('dev:build:sass', 'dev:build:amp'));
 
