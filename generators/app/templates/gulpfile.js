@@ -16,7 +16,7 @@ const ASSETS = [ join(PATHS.app, PATHS.assets, '**', '*')];
 const APP = join(PATHS.app, 'index.html');
 const CSS = join(PATHS.app, PATHS.style, 'main.scss');
 
-gulp.task('dev:clean', () => gulp.src(PATHS.dev, {read: false}).pipe(clean()) );
+gulp.task('dev:clean', () => gulp.src(PATHS.dev, {read: false, allowEmpty: true}).pipe(clean()) );
 
 gulp.task('dev:copy:assets', () => {
   return gulp.src(ASSETS)
@@ -34,16 +34,16 @@ gulp.task('dev:build', gulp.series('dev:build:sass', 'dev:build:amp'));
 
 gulp.task('dev:watch', done => {
   done();
-  gulp.watch( APP, 'dev:build');
-  gulp.watch( CSS, 'dev:build');
-  gulp.watch( ASSETS, 'dev:copy:assets');
+  gulp.watch(APP, ['dev:build']);
+  gulp.watch(CSS, ['dev:build']);
+  gulp.watch(ASSETS, ['dev:copy:assets']);
 });
 
 gulp.task('dev', gulp.series(
   'dev:clean',
   'dev:copy:assets',
   'dev:build',
-  'watch',
+  'dev:watch',
   serveAmpTask
 ));
 
