@@ -4,7 +4,7 @@ const postcss = require('gulp-postcss');
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
-const config = require('node-config');
+const config = require('config');
 const { join } = require('path');
 
 const paths = config.get('paths');

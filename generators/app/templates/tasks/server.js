@@ -3,7 +3,7 @@
  */
 const { gulp } = require('gulp-server-io/export');
 const server = require('gulp-server-io');
-const config = require('node-config');
+const config = require('config');
 
 // wrapper for construct other task
 const createServer = (paths , opt) => {
