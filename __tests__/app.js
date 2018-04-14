@@ -8,7 +8,6 @@ describe('generator-ampx:app', () => {
     ++ctn;
     return helpers.run(path.join(__dirname, '../generators/app')).withPrompts({
       projectName: 'test-project',
-      upgrade: false,
       webhook: ctn > 1
     });
   });
