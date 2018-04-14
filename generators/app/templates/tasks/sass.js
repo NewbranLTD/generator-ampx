@@ -1,12 +1,13 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
-// const postcss = require('gulp-postcss');
+const postcss = require('gulp-postcss');
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
-
-const { paths } = require('./configs');
+const config = require('node-config');
 const { join } = require('path');
+
+const paths = config.get('paths');
 
 exports.sassTask = build => {
   const dest = build ? paths.dest : paths.dev;

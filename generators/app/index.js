@@ -3,8 +3,28 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
 const path = require('path');
+const ncu = require('npm-check-updates');
+const { spawn } = require('child_process');
+const env = Object.assign({}, process.env);
 
 module.exports = class extends Generator {
+  _run() {
+    const options = {
+      cwd: process.cwd(),
+      env
+    };
+    const p = spawn('gulp', ['dev'], options);
+    p.stdout.on('data', data => {
+      this.log(`stdout: ${data}`);
+    });
+    p.stderr.on('data', data => {
+      this.log(`stderr: ${data}`);
+    });
+    p.on('close', code => {
+      this.log(`spawn process finish with code: ${code}`);
+    });
+  }
+
   prompting() {
     // Have Yeoman greet the user.
     this.log(
@@ -16,6 +36,12 @@ module.exports = class extends Generator {
         name: 'projectName',
         message: `What's your project name`,
         default: path.basename(process.cwd())
+      },
+      {
+        type: 'confirm',
+        name: 'upgrade',
+        message: 'Run upgrade check at the end?',
+        default: true
       }
     ];
     return this.prompt(prompts).then(props => {
@@ -42,6 +68,23 @@ module.exports = class extends Generator {
   }
 
   install() {
-    // This.installDependencies();
+    this.installDependencies();
+  }
+
+  end() {
+    if (this.props.upgrade === true) {
+      ncu
+        .run({
+          packageFile: this.destinationPath('package.json'),
+          silent: true,
+          jsonUpgraded: true
+        })
+        .then(upgraded => {
+          this.log('dependencies to upgrade:', upgraded);
+          this._run();
+        });
+    } else {
+      this._run();
+    }
   }
 };

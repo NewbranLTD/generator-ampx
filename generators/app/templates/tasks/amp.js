@@ -7,7 +7,7 @@ const fs = require('fs-extra');
 const template = require('gulp-template');
 const gulpAmpValidator = require('gulp-amphtml-validator');
 // need to get the node-configs here
-const config = require('config');
+const config = require('node-config');
 
 /**
  * get the correct data to inject into the AMP page
