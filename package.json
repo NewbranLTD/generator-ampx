@@ -1,6 +1,6 @@
 {
   "name": "generator-ampx",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "AMP (Accelerate Mobile Page) generator",
   "homepage": "https://newbran.ch",
   "author": {
@@ -8,7 +8,7 @@
     "email": "joelckchu@gmail.com",
     "url": "joelchu.com"
   },
-  "files": ["lib"],
+  "files": ["generators", "lib"],
   "main": "lib/index.js",
   "keywords": ["Node", "JS", "Javascript", "AMP", "Google", "yeoman-generator"],
   "devDependencies": {

@@ -4,22 +4,22 @@
 ## Installation
 
 ```sh
-  $ npm install --save generator-ampx
+  $ npm install --global generator-ampx
 ```
 
 or
 
 ```sh
-  $ yarn add generator-ampx
+  $ yarn add global generator-ampx
 ```
 
 ## Usage
 
-```js
-const generatorAmpx = require('generator-ampx');
-
-generatorAmpx('Magic');
+```sh
+  $ mkdir directory_for_your_project && cd directory_for_your_project
+  $ yo ampx
 ```
+
 ## License
 
 MIT © [Joel Chu](joelchu.com)
