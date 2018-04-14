@@ -15,7 +15,7 @@ const createServer = (paths , opt) => {
 exports.serveAmpTask = (opt={}) => {
   return createServer([
     config.get('paths.dev')
-  ], Object.assign{
-    port: 8088
+  ], Object.assign({
+    port: 6677
   }, opt));
 };
