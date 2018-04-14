@@ -1,6 +1,6 @@
 {
   "name": "generator-ampx",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "AMP (Accelerate Mobile Page) generator",
   "homepage": "https://newbran.ch",
   "author": {
@@ -33,7 +33,7 @@
     "pretest": "eslint .",
     "precommit": "lint-staged",
     "test": "jest",
-    "prepublish": "nsp check"
+    "prepublishOnly": "nsp check"
   },
   "lint-staged": {
     "*.js": ["eslint --fix", "git add"],
