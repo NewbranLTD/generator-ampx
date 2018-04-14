@@ -6,5 +6,9 @@
     "dev": ".dev",
     "dest": "www"
   },
-  "title": "AMP page generate by generator-ampx"
+  "amp": {
+    "pluginScripts": [],
+    "canonical": "index.html",
+    "documentTitle": "AMP page generate by generator-ampx"
+  }
 }

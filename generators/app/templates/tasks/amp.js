@@ -14,12 +14,10 @@ const config = require('config');
  */
 const getData = callback => {
   const paths = config.get('paths');
-  let props = {
-    title: config.get('title')
-  };
-  // get the CSS
-  props.css = fs.readFileSync(join(paths.dev, paths.style, 'main.css'), 'utf8');
-  callback(props);
+  const amp = config.get('amp');
+  callback(Object.assign({
+    css: fs.readFileSync(join(paths.dev, paths.style, 'main.css'), 'utf8')
+  }, amp));
 };
 
 // Run validator

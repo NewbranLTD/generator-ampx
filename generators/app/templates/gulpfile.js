@@ -23,10 +23,8 @@ gulp.task('dev:copy:assets', () => {
     .pipe(gulp.dest(join(PATHS.dev, PATHS.assets)));
 });
 
-gulp.task('dev:build:amp', gulp.series(
-  compileAmp(APP),
-  ampValidator(join(PATHS.dev, 'index.html'))
-));
+gulp.task('dev:build:amp', compileAmp(APP));
+gulp.task('dev:validate:amp', ampValidator(join(PATHS.dev, 'index.html')));
 
 gulp.task('dev:build:sass', sassTask());
 
@@ -34,9 +32,9 @@ gulp.task('dev:build', gulp.series('dev:build:sass', 'dev:build:amp'));
 
 gulp.task('dev:watch', done => {
   done();
-  gulp.watch(APP, ['dev:build']);
-  gulp.watch(CSS, ['dev:build']);
-  gulp.watch(ASSETS, ['dev:copy:assets']);
+  gulp.watch(APP, gulp.series('dev:build', 'dev:validate:amp'));
+  gulp.watch(CSS, gulp.series('dev:build'));
+  gulp.watch(ASSETS, gulp.series('dev:copy:assets'));
 });
 
 gulp.task('dev', gulp.series(
