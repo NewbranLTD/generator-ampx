@@ -1,6 +1,8 @@
 # generator-ampx [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > AMP (Accelerate Mobile Page) generator
 
+## PLEASE DO NOT USE UNTIL VERSION REACH 0.5.X. THIS IS CURRENTLY UNDER HEAVY DEVELOPMENT. PUBLISH ONLY FOR TESTING PURPOSE
+
 ## Installation
 
 ```sh
