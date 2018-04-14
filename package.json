@@ -30,7 +30,7 @@
     "pretest": "eslint .",
     "precommit": "lint-staged",
     "test": "jest",
-    "prepublishOnly": "nsp check"
+    "prepublishOnlyX": "nsp check"
   },
   "lint-staged": {
     "*.js": ["eslint --fix", "git add"],
