@@ -3,20 +3,19 @@
  */
 const { gulp } = require('gulp-server-io/export');
 const server = require('gulp-server-io');
-const config = require('./configs');
+const config = require('config');
 
-
+// wrapper for construct other task
 const createServer = (paths , opt) => {
   return gulp.src(paths)
     .pipe(server(opt));
 };
 
-
-exports.serveAmpTask = () => {
+// main serve dev task
+exports.serveAmpTask = (opt={}) => {
   return createServer([
-    config.paths.dest
-  ], {
-    indexes: ['index.amp.html'],
+    config.get('paths.dev')
+  ], Object.assign{
     port: 8088
-  });
-}
+  }, opt));
+};

@@ -9,7 +9,7 @@
     "url": "joelchu.com"
   },
   "files": ["generators", "lib"],
-  "main": "lib/index.js",
+  "main": "generators/app/index.js",
   "keywords": ["Node", "JS", "Javascript", "AMP", "Google", "yeoman-generator"],
   "devDependencies": {
     "nsp": "^2.6.3",
@@ -53,7 +53,7 @@
     },
     "plugins": ["prettier"]
   },
-  "repository": "joelchu/generator-ampx",
+  "repository": "git@github.com:NewbranLTD/generator-ampx",
   "jest": {
     "testEnvironment": "node"
   },

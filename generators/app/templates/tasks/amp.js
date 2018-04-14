@@ -6,9 +6,6 @@ const gulp = require('gulp');
 const fs = require('fs-extra');
 const template = require('gulp-template');
 const gulpAmpValidator = require('gulp-amphtml-validator');
-// Import our scripts
-const { serveAmpTask } = require('./server');
-const configs = require('./configs');
 // need to get the node-configs here
 const config = require('config');
 
@@ -16,7 +13,13 @@ const config = require('config');
  * get the correct data to inject into the AMP page
  */
 const getData = callback => {
+  const paths = config.get('paths');
+  let props = {
+    title: config.get('title')
+  };
   // get the CSS
+  props.css = fs.readFileSync(join(paths.dev, paths.style, 'main.css'), 'utf8');
+  callback(props);
 };
 
 // Run validator

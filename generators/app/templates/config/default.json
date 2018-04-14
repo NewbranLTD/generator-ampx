@@ -1,1 +1,10 @@
-{}
+{
+  "paths": {
+    "app": "app",
+    "style": "style",
+    "assets": "assets",
+    "dev": ".dev",
+    "dest": "www"
+  },
+  "title": "AMP page generate by generator-ampx"
+}
