@@ -8,7 +8,8 @@ const template = require('gulp-template');
 const gulpAmpValidator = require('gulp-amphtml-validator');
 // need to get the node-configs here
 const config = require('config');
-
+// @to1source add windoze compartible coding
+const base = join(__dirname, '..');
 /**
  * get the correct data to inject into the AMP page
  */
@@ -16,7 +17,7 @@ const getData = callback => {
   const paths = config.get('paths');
   const amp = config.get('amp');
   callback(Object.assign({
-    css: fs.readFileSync(join(paths.dev, paths.style, 'main.css'), 'utf8')
+    css: fs.readFileSync(join(base, paths.dev, paths.style, 'main.css'), 'utf8')
   }, amp));
 };
 
