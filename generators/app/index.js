@@ -71,6 +71,8 @@ module.exports = class extends Generator {
     ['app', 'config', 'tasks'].forEach(dir => {
       this.fs.copy(this.templatePath(dir), this.destinationPath(dir));
     });
+    // @to1source add gitignore
+    this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
     // Copy gulpfile.js
     this.fs.copy(this.templatePath('gulpfile.js'), this.destinationPath('gulpfile.js'));
     // @TODO copy some of our files to the destination folder

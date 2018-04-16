@@ -8,11 +8,14 @@ const config = require('config');
 const { join } = require('path');
 
 const paths = config.get('paths');
+const base = join(__dirname, '..');
 
 exports.sassTask = build => {
   return () => {
     const dest = build ? paths.dest : paths.dev;
-    return gulp.src( join(paths.app, paths.style, 'main.scss') )
+    // @to1source add windoze compatible code
+    const dir = join(base, dest, paths.style);
+    return gulp.src( join(base, paths.app, paths.style, 'main.scss') )
       .pipe(sourcemaps.init())
       .pipe( sass({
         includePaths: join(process.cwd(), 'node_modules')
@@ -22,6 +25,6 @@ exports.sassTask = build => {
         cssnano
       ]))
       .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest(join(dest, paths.style)));
+      .pipe(gulp.dest(dir));
   };
 };
