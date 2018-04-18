@@ -26,7 +26,7 @@
     "yeoman-test": "^1.7.0"
   },
   "scripts": {
-    "prepublishOnlyX": "nsp check",
+    "prepublishOnly": "nsp check",
     "pretest": "eslint .",
     "precommit": "lint-staged",
     "test": "jest"
