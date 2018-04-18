@@ -9,7 +9,7 @@
     "dev": "NODE_ENV=development gulp dev"<% if (webhook) { %>,
     "webhook": "node ./webhook.js"<% } %>
   },
-  "devDependencies": {
+  "dependencies": {
     "autoprefixer": "^8.2.0",
     "cssnano": "^3.10.0",
     "config": "^1.30.0",
@@ -22,5 +22,5 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-template": "^5.0.0"
   },
-  "dependencies": {}
+  "devDependencies": {}
 }

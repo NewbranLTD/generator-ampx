@@ -3,28 +3,13 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
 const path = require('path');
+
 // Const ncu = require('npm-check-updates');
 const { spawn } = require('child_process');
 const env = Object.assign({}, process.env);
 
 module.exports = class extends Generator {
-  _run() {
-    const options = {
-      cwd: process.cwd(),
-      env
-    };
-    const p = spawn('gulp', ['dev'], options);
-    p.stdout.on('data', data => {
-      this.log(`stdout: ${data}`);
-    });
-    p.stderr.on('data', data => {
-      this.log(`stderr: ${data}`);
-    });
-    p.on('close', code => {
-      this.log(`spawn process finish with code: ${code}`);
-    });
-  }
-
+  // Start
   prompting() {
     // Have Yeoman greet the user.
     this.log(
@@ -77,11 +62,33 @@ module.exports = class extends Generator {
     this.fs.copy(this.templatePath('gulpfile.js'), this.destinationPath('gulpfile.js'));
     // @TODO copy some of our files to the destination folder
     // Const base = join(__dirname, '..', '..');
-    this.fs.copyTpl(
-      this.templatePath('package.json.tpl'),
-      this.destinationPath('package.json'),
-      this.props
-    );
+    // First need to check if there is already a package.json file
+    // Then decided if we want to merge or create a new one
+    const packageJson = this.destinationPath('package.json');
+    if (this.fs.exists(packageJson)) {
+      try {
+        const ejs = require('ejs');
+        const json = ejs.compile(
+          this.fs.read(this.templatePath('package.json.tpl')),
+          this.props
+        );
+        // Merge the content
+        const existedJson = this.fs.readJSON(packageJson);
+        this.fs.writeJSON(
+          packageJson,
+          Object.assign({}, existedJson, { dependencies: json.dependencies })
+        );
+      } catch (e) {
+        throw new Error('Can not include ejs to compile template in memory');
+      }
+    } else {
+      this.fs.copyTpl(
+        this.templatePath('package.json.tpl'),
+        this.destinationPath('package.json'),
+        this.props
+      );
+    }
+    // Create a webhook or not
     if (this.props.webhook) {
       this.fs.copyTpl(
         this.templatePath('webhook.js'),
@@ -100,19 +107,19 @@ module.exports = class extends Generator {
   }
 
   end() {
-    this._run();
-    /*
-    If (this.props.upgrade === true) {
-      ncu
-        .run({
-          packageFile: this.destinationPath('package.json'),
-          silent: true,
-          jsonUpgraded: true
-        })
-        .then(upgraded => {
-          this.log('dependencies to upgrade:', upgraded);
-          this._run();
-        });
-    } */
+    const options = {
+      cwd: process.cwd(),
+      env
+    };
+    const p = spawn('gulp', ['dev'], options);
+    p.stdout.on('data', data => {
+      this.log(`stdout: ${data}`);
+    });
+    p.stderr.on('data', data => {
+      this.log(`stderr: ${data}`);
+    });
+    p.on('close', code => {
+      this.log(`spawn process finish with code: ${code}`);
+    });
   }
 };
