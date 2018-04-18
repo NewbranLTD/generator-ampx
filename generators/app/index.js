@@ -108,8 +108,8 @@ module.exports = class extends Generator {
 
   end() {
     const options = {
-      cwd: process.cwd(),
-      env
+      cwd: this.destinationRoot(),
+      env: env
     };
     const p = spawn('gulp', ['dev'], options);
     p.stdout.on('data', data => {
