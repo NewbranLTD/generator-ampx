@@ -6,6 +6,7 @@ const path = require('path');
 const ejs = require('ejs');
 // Const ncu = require('npm-check-updates');
 const { spawn } = require('child_process');
+const merge = require('lodash.merge');
 const env = Object.assign({}, process.env);
 
 module.exports = class extends Generator {
@@ -59,20 +60,18 @@ module.exports = class extends Generator {
     // First need to check if there is already a package.json file
     // Then decided if we want to merge or create a new one
     const packageJson = this.destinationPath('package.json');
-    if (this.fs.existsSync(packageJson)) {
-      console.log('There is already a package.json file');
+    if (this.fs.exists(packageJson)) {
       try {
-        const json = ejs.compile(
-          this.fs.read(this.templatePath('package.json.tpl')),
+        const json = ejs.compile(this.fs.read(this.templatePath('package.json.tpl')))(
           this.props
         );
-        console.log('package.json tpl', json);
+        // Console.log('package.json tpl', json);
         // Merge the content
         const existedJson = this.fs.readJSON(packageJson);
-        console.log('existedJson', existedJson);
+        // Console.log('existedJson', existedJson);
         this.fs.writeJSON(
           packageJson,
-          Object.assign({}, existedJson, { devDependencies: json.devDependencies })
+          merge({}, existedJson, { devDependencies: json.devDependencies })
         );
       } catch (e) {
         throw new Error('Can not include ejs to compile template in memory');
