@@ -22,12 +22,6 @@ module.exports = class extends Generator {
         message: `What's your project name`,
         default: path.basename(process.cwd())
       },
-      /* {
-        type: 'confirm',
-        name: 'upgrade',
-        message: 'Run upgrade check at the end?',
-        default: false
-      }, */
       {
         type: 'confirm',
         name: 'webhook',
@@ -72,8 +66,10 @@ module.exports = class extends Generator {
           this.fs.read(this.templatePath('package.json.tpl')),
           this.props
         );
+        console.log('package.json tpl', json);
         // Merge the content
         const existedJson = this.fs.readJSON(packageJson);
+        console.log('existedJson', existedJson);
         this.fs.writeJSON(
           packageJson,
           Object.assign({}, existedJson, { devDependencies: json.devDependencies })
@@ -119,7 +115,7 @@ module.exports = class extends Generator {
       this.log(`stderr: ${data}`);
     });
     p.on('close', code => {
-      this.log(`spawn process finish with code: ${code}`);
+      this.log(`Installation complete with with code: ${code}`);
     });
   }
 };
