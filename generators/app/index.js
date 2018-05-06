@@ -3,7 +3,7 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
 const path = require('path');
-
+const ejs = require('ejs');
 // Const ncu = require('npm-check-updates');
 const { spawn } = require('child_process');
 const env = Object.assign({}, process.env);
@@ -68,7 +68,6 @@ module.exports = class extends Generator {
     if (this.fs.existsSync(packageJson)) {
       console.log('There is already a package.json file');
       try {
-        const ejs = require('ejs');
         const json = ejs.compile(
           this.fs.read(this.templatePath('package.json.tpl')),
           this.props
@@ -77,7 +76,7 @@ module.exports = class extends Generator {
         const existedJson = this.fs.readJSON(packageJson);
         this.fs.writeJSON(
           packageJson,
-          Object.assign({}, existedJson, { dependencies: json.dependencies })
+          Object.assign({}, existedJson, { devDependencies: json.devDependencies })
         );
       } catch (e) {
         throw new Error('Can not include ejs to compile template in memory');
