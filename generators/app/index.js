@@ -65,7 +65,8 @@ module.exports = class extends Generator {
     // First need to check if there is already a package.json file
     // Then decided if we want to merge or create a new one
     const packageJson = this.destinationPath('package.json');
-    if (this.fs.exists(packageJson)) {
+    if (this.fs.existsSync(packageJson)) {
+      console.log('There is already a package.json file');
       try {
         const ejs = require('ejs');
         const json = ejs.compile(
