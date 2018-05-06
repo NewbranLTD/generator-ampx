@@ -3,9 +3,10 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
 const path = require('path');
-
+const ejs = require('ejs');
 // Const ncu = require('npm-check-updates');
 const { spawn } = require('child_process');
+const merge = require('lodash.merge');
 const env = Object.assign({}, process.env);
 
 module.exports = class extends Generator {
@@ -22,12 +23,6 @@ module.exports = class extends Generator {
         message: `What's your project name`,
         default: path.basename(process.cwd())
       },
-      /* {
-        type: 'confirm',
-        name: 'upgrade',
-        message: 'Run upgrade check at the end?',
-        default: false
-      }, */
       {
         type: 'confirm',
         name: 'webhook',
@@ -67,17 +62,13 @@ module.exports = class extends Generator {
     const packageJson = this.destinationPath('package.json');
     if (this.fs.exists(packageJson)) {
       try {
-        const ejs = require('ejs');
-        const json = ejs.compile(
-          this.fs.read(this.templatePath('package.json.tpl')),
-          this.props
+        const json = JSON.parse(
+          ejs.compile(this.fs.read(this.templatePath('package.json.tpl')))(this.props)
         );
         // Merge the content
         const existedJson = this.fs.readJSON(packageJson);
-        this.fs.writeJSON(
-          packageJson,
-          Object.assign({}, existedJson, { dependencies: json.dependencies })
-        );
+        const newJson = merge({}, existedJson, { devDependencies: json.devDependencies });
+        this.fs.writeJSON(packageJson, newJson);
       } catch (e) {
         throw new Error('Can not include ejs to compile template in memory');
       }
@@ -119,7 +110,7 @@ module.exports = class extends Generator {
       this.log(`stderr: ${data}`);
     });
     p.on('close', code => {
-      this.log(`spawn process finish with code: ${code}`);
+      this.log(`Installation complete with with code: ${code}`);
     });
   }
 };
