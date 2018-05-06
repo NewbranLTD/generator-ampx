@@ -62,17 +62,13 @@ module.exports = class extends Generator {
     const packageJson = this.destinationPath('package.json');
     if (this.fs.exists(packageJson)) {
       try {
-        const json = ejs.compile(this.fs.read(this.templatePath('package.json.tpl')))(
-          this.props
+        const json = JSON.parse(
+          ejs.compile(this.fs.read(this.templatePath('package.json.tpl')))(this.props)
         );
-        // Console.log('package.json tpl', json);
         // Merge the content
         const existedJson = this.fs.readJSON(packageJson);
-        // Console.log('existedJson', existedJson);
-        this.fs.writeJSON(
-          packageJson,
-          merge({}, existedJson, { devDependencies: json.devDependencies })
-        );
+        const newJson = merge({}, existedJson, { devDependencies: json.devDependencies });
+        this.fs.writeJSON(packageJson, newJson);
       } catch (e) {
         throw new Error('Can not include ejs to compile template in memory');
       }
